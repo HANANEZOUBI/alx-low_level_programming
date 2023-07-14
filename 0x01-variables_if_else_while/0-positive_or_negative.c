@@ -5,9 +5,10 @@
 #include <stdio.h>
 
 
-/**
+/*
+ *
  * main - prints if number is zero,postive or negative
- * Retyrn: Always (Success)
+ * Return: Always (Success)
  *
  */
 
