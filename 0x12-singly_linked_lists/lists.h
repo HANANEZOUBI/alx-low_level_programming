@@ -1,5 +1,5 @@
-#ifndef _LINKED_LIST
-#define _LINKED_LIST
+#ifndef _LIST_
+#define _LIST_
 
 #include <stdlib.h>
 #include <string.h>
@@ -12,6 +12,7 @@
  * @next: points to the next node
  *
  * Description: singly linked list node structure
+ * for alx project
  */
 typedef struct list_s
 {
