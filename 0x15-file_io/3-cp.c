@@ -40,7 +40,7 @@ void error_file(int file_from, int file_to, char *argv[])
 int main(int argc, char *argv[])
 {
 	int file_from, file_to, err_close;
-	ssize_t nchars, nw;
+	ssize_t n, nw;
 	char buf[1024];
 
 	if (argc != 3)
