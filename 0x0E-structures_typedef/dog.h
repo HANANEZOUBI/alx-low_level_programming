@@ -15,7 +15,7 @@ typedef struct dog dog_t;
  * @owner : dog's owner
  *
  * DESCRIPTION : the structure of a dog
- **/
+ */
 
 struct dog
 {
