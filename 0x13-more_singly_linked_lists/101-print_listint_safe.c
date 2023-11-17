@@ -1,76 +1,70 @@
 #include "lists.h"
 
-typedef struct listint_s {
-    int n;
-    struct listint_s *next;
-} listint_t;
+/**
+ * free_listp - free a linked list
+ * @head: head of a list
+ *
+ * Return: no return.
+ */
+void free_listp(listp_t **head)
+{
+	listp_t *temp;
+	listp_t *curr;
+
+	if (head != NULL)
+	{
+		curr = *head;
+		while ((temp = curr) != NULL)
+		{
+			curr = curr->next;
+			free(temp);
+		}
+		*head = NULL;
+	}
+}
 
 /**
- * print_listint_safe - Prints a listint_t linked list safely
- * @head: Pointer to the head of the linked list
+ * print_listint_safe - print a linked list
+ * @head: head of a list
  *
- * Return: The number of nodes in the list
+ * Return: number of nodes in the list.
  */
-size_t print_listint_safe(const listint_t *head) {
-    const listint_t *slow_ptr, *fast_ptr;
-    size_t node_count = 0;
 
-    slow_ptr = head;
-    fast_ptr = head;
+size_t print_listint_safe(const listint_t *head)
+{
+	size_t nn = 0;
+	listp_t *hptr, *new, *add;
 
-    while (slow_ptr && fast_ptr && fast_ptr->next) {
-        printf("%d\n", slow_ptr->n);
-        slow_ptr = slow_ptr->next;
-        fast_ptr = fast_ptr->next->next;
+	hptr = NULL;
+	while (head != NULL)
+	{
+		new = malloc(sizeof(listp_t));
 
-        if (slow_ptr == fast_ptr) {
-            printf("Infinite loop detected, exiting with status 98\n");
-            exit(98);
-        }
+		if (new == NULL)
+			exit(98);
 
-        node_count++;
-    }
+		new->p = (void *)head;
+		new->next = hptr;
+		hptr = new;
 
-    
-    if (slow_ptr)
-        printf("%d\n", slow_ptr->n);
+		add = hptr;
 
-    return node_count;
+		while (add->next != NULL)
+		{
+			add = add->next;
+			if (head == add->p)
+			{
+				printf("-> [%p] %d\n", (void *)head, head->n);
+				free_listp(&hptr);
+				return (nn);
+			}
+		}
+
+		printf("[%p] %d\n", (void *)head, head->n);
+		head = head->next;
+		nn++;
+	}
+
+	free_listp(&hptr);
+	return (nn);
 }
-
-int main(void) {
-    listint_t *head = NULL, *new_node;
-    size_t node_count;
-
-    
-    new_node = malloc(sizeof(listint_t));
-    if (new_node == NULL) {
-        perror("Memory allocation failed");
-        return (EXIT_FAILURE);
-    }
-    new_node->n = 1;
-    new_node->next = head;
-    head = new_node;
-
-    new_node = malloc(sizeof(listint_t));
-    if (new_node == NULL) {
-        perror("Memory allocation failed");
-        return (EXIT_FAILURE);
-    }
-    new_node->n = 2;
-    new_node->next = head;
-    head = new_node;
-
-    
-    new_node = head;
-    while (new_node->next)
-        new_node = new_node->next;
-    new_node->next = head;
-
-    
-    node_count = print_listint_safe(head);
-    printf("Number of nodes in the list: %zu\n", node_count);
-
-    return (EXIT_SUCCESS);
-}
-
